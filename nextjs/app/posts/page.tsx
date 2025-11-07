@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { apiFetch } from "@/lib/api";
+import useRequireAuth from "@/lib/useRequireAuth";
 
 type Post = { id: number; title: string; content: string; user?: { id: number; name: string } };
 
@@ -13,6 +14,7 @@ type Paginated<T> = {
 };
 
 export default function PostsPage() {
+  const authLoading = useRequireAuth();
   const [page, setPage] = useState(1);
   const [perPage] = useState(10);
   const [loading, setLoading] = useState(true);
@@ -33,6 +35,8 @@ export default function PostsPage() {
   }
 
   useEffect(() => { load(page); /* eslint-disable-next-line */ }, [page]);
+
+  if (authLoading) return <div className="loading loading-spinner" />;
 
   return (
     <div>

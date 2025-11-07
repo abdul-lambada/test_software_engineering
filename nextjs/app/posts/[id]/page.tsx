@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { apiFetch, csrf } from "@/lib/api";
+import useRequireAuth from "@/lib/useRequireAuth";
 
 type Post = { id: number; title: string; content: string; user?: { id: number; name: string } };
 
 export default function PostDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const authLoading = useRequireAuth();
   const id = params?.id as string;
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,6 +45,8 @@ export default function PostDetailPage() {
       setDeleting(false);
     }
   }
+
+  if (authLoading) return <div className="loading loading-spinner" />;
 
   return (
     <div>

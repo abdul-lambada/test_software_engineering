@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { apiFetch, csrf } from "@/lib/api";
+import useRequireAuth from "@/lib/useRequireAuth";
 
 export default function EditPostPage() {
   const params = useParams();
   const router = useRouter();
+  const authLoading = useRequireAuth();
   const id = params?.id as string;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -46,6 +48,8 @@ export default function EditPostPage() {
       setSaving(false);
     }
   }
+
+  if (authLoading) return <div className="loading loading-spinner" />;
 
   return (
     <div className="max-w-2xl mx-auto">

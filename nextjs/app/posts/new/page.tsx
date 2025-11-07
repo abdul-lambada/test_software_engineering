@@ -2,9 +2,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiFetch, csrf } from "@/lib/api";
+import useRequireAuth from "@/lib/useRequireAuth";
 
 export default function NewPostPage() {
   const router = useRouter();
+  const authLoading = useRequireAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,6 +29,8 @@ export default function NewPostPage() {
       setLoading(false);
     }
   }
+
+  if (authLoading) return <div className="loading loading-spinner" />;
 
   return (
     <div className="max-w-2xl mx-auto">
