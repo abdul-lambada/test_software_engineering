@@ -10,6 +10,7 @@ export default function EditPostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function load() {
@@ -32,14 +33,17 @@ export default function EditPostPage() {
     e.preventDefault();
     setError(null);
     try {
+      setSaving(true);
       await csrf();
       await apiFetch(`/api/posts/${id}`, {
         method: "PUT",
         body: JSON.stringify({ title, content })
       });
-      router.push(`/posts/${id}`);
+      router.replace(`/posts/${id}`);
     } catch (e: any) {
       setError(e.message);
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -52,7 +56,9 @@ export default function EditPostPage() {
         <form className="space-y-3" onSubmit={onSubmit}>
           <input className="input input-bordered w-full" placeholder="Title" value={title} onChange={e=>setTitle(e.target.value)} required />
           <textarea className="textarea textarea-bordered w-full min-h-40" placeholder="Content" value={content} onChange={e=>setContent(e.target.value)} required />
-          <button className="btn btn-primary">Save</button>
+          <button type="submit" className="btn btn-primary" disabled={saving}>
+            {saving ? "Saving..." : "Save"}
+          </button>
         </form>
       )}
     </div>

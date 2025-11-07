@@ -32,7 +32,7 @@ export default function RootLayout({
           <div className="flex-1">
             <Link href="/" className="btn btn-ghost text-xl">IMP Assessment</Link>
           </div>
-          <div className="flex-none gap-2 pr-4">
+          <div className="navbar-end flex items-center gap-4 pr-4">
             <Link href="/posts" className="btn btn-sm">Posts</Link>
             <Link href="/auth/sign-in" className="btn btn-sm btn-outline">Sign In</Link>
             <Link href="/auth/sign-up" className="btn btn-sm btn-primary">Sign Up</Link>
