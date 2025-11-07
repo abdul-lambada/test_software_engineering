@@ -16,7 +16,7 @@ export default function SignInPage() {
     setError(null);
     try {
       await csrf();
-      await apiFetch("/login", {
+      await apiFetch("/api/login", {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });

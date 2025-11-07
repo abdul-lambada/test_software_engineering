@@ -33,7 +33,7 @@ export default function NavAuth() {
     try {
       setSigningOut(true);
       await csrf();
-      await apiFetch("/logout", { method: "POST" });
+      await apiFetch("/api/logout", { method: "POST" });
       setUser(null);
       router.push("/auth/sign-in");
     } catch (e) {

@@ -18,7 +18,7 @@ export default function SignUpPage() {
     setError(null);
     try {
       await csrf();
-      await apiFetch("/register", {
+      await apiFetch("/api/register", {
         method: "POST",
         body: JSON.stringify({ name, email, password, password_confirmation }),
       });
